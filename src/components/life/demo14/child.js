@@ -9,6 +9,7 @@ export default class extends React.PureComponent {
     this.state = {
       uid: props.uid
     }
+    console.log('This is demo14 ~');
   }
   static defaultProps = {
     uid: '',

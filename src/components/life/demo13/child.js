@@ -3,6 +3,11 @@ import PropTypes from 'prop-types';
 
 // TODO: 完全可控的组件
 export default class extends React.PureComponent {
+  constructor(props) {
+    super(props)
+    console.log('This is demo13 ~');
+  }
+
   static defaultProps = {
     uid: '',
     onChange: () => {}

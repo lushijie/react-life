@@ -8,6 +8,7 @@ export default class extends React.Component {
       uid: props.uid,
       ownUpdate: false
     }
+    console.log('This is demo21 ~');
   }
 
   static defaultProps = {
