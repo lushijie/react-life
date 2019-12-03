@@ -21,6 +21,8 @@ export default class extends React.Component {
 
   // TODO: 父级 state 或者传入的 prop 变化触发
   // TODO: 子级 state 变化触发
+  // TODO: 异步：当外部多个属性在很短的时间间隔之内多次变化，就会导致componentWillReceiveProps被多次调用。
+  //            这个调用并不会被合并，如果这次内容都会触发异步请求，那么可能会导致多个异步请求阻塞。
   UNSAFE_componentWillReceiveProps(nextProps, nextState) {
     console.log('UNSAFE_componentWillReceiveProps', nextProps, nextState);
     if (nextProps.uid !== this.props.uid) {

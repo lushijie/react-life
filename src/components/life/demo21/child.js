@@ -20,6 +20,8 @@ export default class extends React.Component {
     onChange: PropTypes.func.isRequired
   }
 
+  // TODO: 父级 state 或者传入的 prop 变化触发
+  // TODO: 子级 state 变化触发
   static getDerivedStateFromProps(nextProps, prevState) {
     console.log('getDerivedStateFromProps', nextProps, prevState)
     if (prevState.ownUpdate) {
