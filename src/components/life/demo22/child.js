@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 // TODO: https://reactjs.org/blog/2018/05/23/react-v-16-4.html#bugfix-for-getderivedstatefromprops
 // TODO: https://juejin.im/post/5c3ad49be51d45521053fde0
+// TODO: http://www.ayqy.net/blog/react-async-rendering/
 export default class extends React.Component {
   constructor(props) {
     super(props)
