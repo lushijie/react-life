@@ -35,19 +35,25 @@ export default class extends React.Component {
     console.log('componentWillUpdate', nextProps, nextState)
   }
 
-  // 执行副作用
-  componentDidUpdate(prevProps, prevState) {
-    console.log('componentDidUpdate', prevProps, this.props, prevState, this.state)
-    if (prevState.color !== this.state.color) {
-      this.props.onChange(this.state.color)
-    }
-  }
+  // // 执行副作用
+  // componentDidUpdate(prevProps, prevState) {
+  //   console.log('componentDidUpdate', prevProps, this.props, prevState, this.state)
+  //   if (prevState.color !== this.state.color) {
+  //     this.props.onChange(this.state.color)
+  //   }
+  // }
 
   handleChangeColor = () => {
     console.log('handleChangeColor')
     this.setState({
       color: `c_${Utils.createColor()}`,
+    }, () => {
+      this.props.onChange(this.state.color)
     })
+
+    // this.setState({
+    //   color: `c_${Utils.createColor()}`,
+    // })
   }
 
   render() {
