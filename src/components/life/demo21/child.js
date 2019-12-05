@@ -1,23 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Utils from '../../utils'
 
 export default class extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      uid: props.uid,
+      color: props.color,
       ownUpdate: false
     }
     console.log('This is demo21 ~');
   }
 
   static defaultProps = {
-    uid: '',
+    color: '',
     onChange: () => {}
   }
 
   static propTypes = {
-    uid: PropTypes.string.isRequired,
+    color: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired
   }
 
@@ -27,13 +28,13 @@ export default class extends React.Component {
     console.log('getDerivedStateFromProps', nextProps, prevState)
     if (prevState.ownUpdate) {
       return {
-        uid: prevState.uid,
+        color: prevState.color,
         ownUpdate: false
       }
     }
-    if (nextProps.uid !== prevState.uid) {
+    if (nextProps.color !== prevState.color) {
       return {
-        uid: nextProps.uid
+        color: nextProps.color
       }
     }
     return null
@@ -41,23 +42,23 @@ export default class extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     console.log('componentDidUpdate', prevProps, prevState, this.state)
-    if (prevState.uid !== this.state.uid) {
-      this.props.onChange(this.state.uid)
+    if (prevState.color !== this.state.color) {
+      this.props.onChange(this.state.color)
     }
   }
 
-  handleChangeUid = () => {
-    console.log('handleChangeUid')
+  handleChangeColor = () => {
+    console.log('handleChangeColor')
     this.setState({
-      uid: `c_${Math.random().toString().slice(-6)}`,
+      color: `c_${Utils.createColor()}`,
       ownUpdate: true
     })
   }
 
   render() {
     return <div style={{ border : 'red 1px solid'}}>
-      <button onClick={this.handleChangeUid}>changeUid</button>
-      <p>uid: {this.state.uid}</p>
+      <button onClick={this.handleChangeColor}>changeColor</button>
+      <p>color: {this.state.color}</p>
     </div>
   }
 }

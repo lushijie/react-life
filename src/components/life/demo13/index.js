@@ -1,15 +1,17 @@
 import React from 'react';
 import Child from './child'
+import Utils from '../../utils'
+
 
 export default class extends React.Component {
   state = {
     timer: 0,
-    childUid: '0',
+    childColor: '#000000',
   }
 
-  handleChangeChildUid = () => {
+  handleChangeChildColor = () => {
     this.setState({
-      childUid: Math.random().toString().slice(-6)
+      childColor: Utils.createColor()
     })
   }
 
@@ -19,21 +21,21 @@ export default class extends React.Component {
     })
   }
 
-  onChildChange = (childUid) => {
-    console.log('child_change:', childUid);
+  onChildChange = (childColor) => {
+    console.log('child_change:', childColor);
     this.setState({
-      childUid,
+      childColor,
     })
   }
 
   render() {
     return <div style={{ border : 'blue 1px solid', padding: '3px' }}>
       <p><button onClick={this.handleAddTimer}>addTimer</button></p>
-      <p><button onClick={this.handleChangeChildUid}>changeChildUid</button></p>
+      <p><button onClick={this.handleChangeChildColor}>changeChildColor</button></p>
 
       <p>timer:{this.state.timer}</p>
-      <p>childUid:{this.state.childUid}</p>
-      <Child uid={this.state.childUid} onChange={this.onChildChange} />
+      <p>childColor:{this.state.childColor}</p>
+      <Child color={this.state.childColor} onChange={this.onChildChange} />
     </div>
   }
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Utils from '../../utils'
 
 // TODO: 完全可控的组件
 export default class extends React.PureComponent {
@@ -9,24 +10,24 @@ export default class extends React.PureComponent {
   }
 
   static defaultProps = {
-    uid: '',
+    color: '',
     onChange: () => {}
   }
 
   static propTypes = {
-    uid: PropTypes.string.isRequired,
+    color: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired
   }
 
-  handleChangeUid = () => {
-    console.log('handleChangeUid')
-    this.props.onChange(`c_${Math.random().toString().slice(-6)}`)
+  handleChangeColor = () => {
+    console.log('handleChangeColor')
+    this.props.onChange(`c_${Utils.createColor()}`)
   }
 
   render() {
     return <div style={{ border : 'red 1px solid'}}>
-      <button onClick={this.handleChangeUid}>changeUid</button>
-      <p>uid: {this.props.uid}</p>
+      <button onClick={this.handleChangeColor}>changeColor</button>
+      <p>color: {this.props.color}</p>
     </div>
   }
 }

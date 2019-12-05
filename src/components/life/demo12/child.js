@@ -1,48 +1,49 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Utils from '../../utils'
 
 export default class extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      uid: props.uid,
+      color: props.color,
     }
     console.log('This is demo12 ~');
   }
 
   static defaultProps = {
-    uid: '',
+    color: '',
     onChange: () => {}
   }
 
   static propTypes = {
-    uid: PropTypes.string.isRequired,
+    color: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired
   }
 
   componentDidUpdate(prevProps, prevState) {
     console.log('componentDidUpdate', prevProps, this.props, prevState, this.state)
-    if (prevProps.uid !== this.props.uid) {
+    if (prevProps.color !== this.props.color) {
       this.setState({
-        uid: this.props.uid
+        color: this.props.color
       })
     }
-    if (prevState.uid !== this.state.uid) {
-      this.props.onChange(this.state.uid)
+    if (prevState.color !== this.state.color) {
+      this.props.onChange(this.state.color)
     }
   }
 
-  handleChangeUid = () => {
-    console.log('handleChangeUid')
+  handleChangeColor = () => {
+    console.log('handleChangeColor')
     this.setState({
-      uid: `c_${Math.random().toString().slice(-6)}`,
+      color: `c_${Utils.createColor()}`,
     })
   }
 
   render() {
     return <div style={{ border : 'red 1px solid'}}>
-      <button onClick={this.handleChangeUid}>changeUid</button>
-      <p>uid: {this.state.uid}</p>
+      <button onClick={this.handleChangeColor}>changeColor</button>
+      <p>color: {this.state.color}</p>
     </div>
   }
 }

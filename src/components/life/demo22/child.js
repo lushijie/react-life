@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import Utils from '../../utils'
 
 // TODO: https://reactjs.org/blog/2018/05/23/react-v-16-4.html#bugfix-for-getderivedstatefromprops
 // TODO: https://juejin.im/post/5c3ad49be51d45521053fde0
@@ -8,49 +9,49 @@ export default class extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      uid: props.uid || '0',
+      color: props.color,
     }
     console.log('This is demo22 ~');
   }
 
   static defaultProps = {
-    uid: '',
+    color: '',
     onChange: () => {}
   }
 
   static propTypes = {
-    uid: PropTypes.string.isRequired,
+    color: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
     console.log('getDerivedStateFromProps', nextProps, prevState)
     const prevProps = prevState.prevProps || {};
-    const uid = prevProps.uid !== nextProps.uid ? nextProps.uid : prevState.uid;
+    const color = prevProps.color !== nextProps.color ? nextProps.color : prevState.color;
     return {
       prevProps: nextProps,
-      uid
+      color
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
     console.log('componentDidUpdate', prevProps, prevState)
-    if (prevState.uid !== this.state.uid) {
-      this.props.onChange(this.state.uid)
+    if (prevState.color !== this.state.color) {
+      this.props.onChange(this.state.color)
     }
   }
 
-  handleChangeUid = () => {
-    console.log('handleChangeUid')
+  handleChangeColor = () => {
+    console.log('handleChangeColor')
     this.setState({
-      uid: `c_${Math.random().toString().slice(-6)}`,
+      color: `c_${Utils.createColor()}`,
     })
   }
 
   render() {
     return <div style={{ border : 'red 1px solid' }}>
-      <button onClick={this.handleChangeUid}>changeUid</button>
-      <p>uid: {this.state.uid}</p>
+      <button onClick={this.handleChangeColor}>changeColor</button>
+      <p>color: {this.state.color}</p>
     </div>
   }
 }
