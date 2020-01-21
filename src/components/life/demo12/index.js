@@ -1,6 +1,8 @@
-import React from 'react';
+import React, {lazy}from 'react';
 import Child from './child'
 import Utils from '../../utils'
+
+const SomeComponent = lazy(() => import("./test.js"));
 
 export default class extends React.Component {
   state = {
@@ -35,6 +37,7 @@ export default class extends React.Component {
       <p>timer:{this.state.timer}</p>
       <p>childColor:{this.state.childColor}</p>
       <Child color={this.state.childColor} onChange={this.onChildChange} />
+      <SomeComponent></SomeComponent>
     </div>
   }
 }
