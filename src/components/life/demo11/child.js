@@ -6,9 +6,9 @@ export default class extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      counter: 0,
       color: props.color,
     }
-    console.log('This is demo11 ~');
   }
 
   static defaultProps = {
@@ -21,45 +21,68 @@ export default class extends React.Component {
     onChange: PropTypes.func.isRequired
   }
 
-  // 子组件 setState 不会触发该声明周期
-  componentWillReceiveProps(nextProps, nextState) {
-    console.log('componentWillReceiveProps', nextProps, nextState);
-    if (nextProps.color !== this.props.color) {
-      this.setState({
-        color: nextProps.color
-      })
-    }
+  UNSAFE_componentWillUpdate(nextProps, nextState) {
+    console.log('child componentWillUpdate', {
+      nextProps,
+      nextState
+    })
   }
 
-  componentWillUpdate(nextProps, nextState) {
-    console.log('componentWillUpdate', nextProps, nextState)
-  }
-
-  // // 执行副作用
-  // componentDidUpdate(prevProps, prevState) {
-  //   console.log('componentDidUpdate', prevProps, this.props, prevState, this.state)
-  //   if (prevState.color !== this.state.color) {
-  //     this.props.onChange(this.state.color)
+  // // 子组件 setState 不会触发该声明周期
+  // UNSAFE_componentWillReceiveProps(nextProps, nextState) {
+  //   console.log('child componentWillReceiveProps', {
+  //     nextProps,
+  //     nextState
+  //   });
+  //   if (nextProps.color !== this.props.color) {
+  //     this.setState({
+  //       color: nextProps.color
+  //     })
   //   }
   // }
 
+  // handleChangeColor = () => {
+  //   this.setState({
+  //     color: `c_${Utils.createColor()}`,
+  //   }, () => {
+  //     this.props.onChange(this.state.color)
+  //   })
+  // }
+
+  // 执行副作用
+  componentDidUpdate(prevProps, prevState) {
+    console.log('child componentDidUpdate', {
+      prevProps,
+      props: this.props,
+      prevState,
+      state: this.state
+    })
+    if (prevProps.color !== this.props.color) {
+      this.setState({
+        color: this.props.color,
+      })
+    }
+    if (prevState.color !== this.state.color) {
+      this.props.onChange(this.state.color)
+    }
+  }
+
   handleChangeColor = () => {
-    console.log('handleChangeColor')
     this.setState({
       color: `c_${Utils.createColor()}`,
-    }, () => {
-      this.props.onChange(this.state.color)
     })
+  }
 
-    // this.setState({
-    //   color: `c_${Utils.createColor()}`,
-    // })
+  handleAddCounter = () => {
+    this.setState(preState => ({
+      counter: preState.counter + 1
+    }))
   }
 
   render() {
     return <div style={{ border : 'red 1px solid'}}>
-      <button onClick={this.handleChangeColor}>changeColor</button>
-      <p>color: {this.state.color}</p>
+      <p><button onClick={this.handleAddCounter}>addCounter：{this.state.counter}</button></p>
+      <p><button onClick={this.handleChangeColor}>changeColor：{this.state.color}</button></p>
     </div>
   }
 }
