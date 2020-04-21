@@ -28,48 +28,24 @@ export default class extends React.Component {
     })
   }
 
-  // // 子组件 setState 不会触发该声明周期
-  // UNSAFE_componentWillReceiveProps(nextProps, nextState) {
-  //   console.log('child componentWillReceiveProps', {
-  //     nextProps,
-  //     nextState
-  //   });
-  //   if (nextProps.color !== this.props.color) {
-  //     this.setState({
-  //       color: nextProps.color
-  //     })
-  //   }
-  // }
-
-  // handleChangeColor = () => {
-  //   this.setState({
-  //     color: `c_${Utils.createColor()}`,
-  //   }, () => {
-  //     this.props.onChange(this.state.color)
-  //   })
-  // }
-
-  // 执行副作用
-  componentDidUpdate(prevProps, prevState) {
-    console.log('child componentDidUpdate', {
-      prevProps,
-      props: this.props,
-      prevState,
-      state: this.state
-    })
-    if (prevProps.color !== this.props.color) {
+  // 子组件 setState 不会触发该声明周期
+  UNSAFE_componentWillReceiveProps(nextProps, nextState) {
+    console.log('child componentWillReceiveProps', {
+      nextProps,
+      nextState
+    });
+    if (nextProps.color !== this.props.color) {
       this.setState({
-        color: this.props.color,
+        color: nextProps.color
       })
-    }
-    if (prevState.color !== this.state.color) {
-      this.props.onChange(this.state.color)
     }
   }
 
   handleChangeColor = () => {
     this.setState({
       color: `c_${Utils.createColor()}`,
+    }, () => {
+      this.props.onChange(this.state.color)
     })
   }
 

@@ -6,9 +6,9 @@ export default class extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      counter: 0,
       color: props.color,
     }
-    console.log('This is demo12 ~');
   }
 
   static defaultProps = {
@@ -21,11 +21,24 @@ export default class extends React.Component {
     onChange: PropTypes.func.isRequired
   }
 
+  UNSAFE_componentWillUpdate(nextProps, nextState) {
+    console.log('child componentWillUpdate', {
+      nextProps,
+      nextState
+    })
+  }
+
+  // 执行副作用
   componentDidUpdate(prevProps, prevState) {
-    console.log('componentDidUpdate', prevProps, this.props, prevState, this.state)
+    console.log('child componentDidUpdate', {
+      prevProps,
+      props: this.props,
+      prevState,
+      state: this.state
+    })
     if (prevProps.color !== this.props.color) {
       this.setState({
-        color: this.props.color
+        color: this.props.color,
       })
     }
     if (prevState.color !== this.state.color) {
@@ -34,16 +47,21 @@ export default class extends React.Component {
   }
 
   handleChangeColor = () => {
-    console.log('handleChangeColor')
     this.setState({
       color: `c_${Utils.createColor()}`,
     })
   }
 
+  handleAddCounter = () => {
+    this.setState(preState => ({
+      counter: preState.counter + 1
+    }))
+  }
+
   render() {
     return <div style={{ border : 'red 1px solid'}}>
-      <button onClick={this.handleChangeColor}>changeColor</button>
-      <p>color: {this.state.color}</p>
+      <p><button onClick={this.handleAddCounter}>addCounter：{this.state.counter}</button></p>
+      <p><button onClick={this.handleChangeColor}>changeColor：{this.state.color}</button></p>
     </div>
   }
 }
