@@ -1,15 +1,17 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from 'react'
+import PropTypes from 'prop-types'
 import Utils from '../../utils'
 
+// TODO: https://reactjs.org/blog/2018/05/23/react-v-16-4.html#bugfix-for-getderivedstatefromprops
+// TODO: https://juejin.im/post/5c3ad49be51d45521053fde0
+// TODO: http://www.ayqy.net/blog/react-async-rendering/
 export default class extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      counter: 0,
       color: props.color,
-      ownUpdate: false
     }
-    console.log('This is demo21 ~');
   }
 
   static defaultProps = {
@@ -22,43 +24,45 @@ export default class extends React.Component {
     onChange: PropTypes.func.isRequired
   }
 
-  // TODO: 父级 state 或者传入的 prop 变化触发
-  // TODO: 子级 state 变化触发
   static getDerivedStateFromProps(nextProps, prevState) {
-    console.log('getDerivedStateFromProps', nextProps, prevState)
-    if (prevState.ownUpdate) {
-      return {
-        color: prevState.color,
-        ownUpdate: false
-      }
+    console.log('getDerivedStateFromProps', {
+      nextProps,
+      prevState
+    })
+    const prevProps = prevState.prevProps || {};
+    const color = prevProps.color !== nextProps.color ? nextProps.color : prevState.color;
+    return {
+      prevProps: nextProps,
+      color
     }
-    if (nextProps.color !== prevState.color) {
-      return {
-        color: nextProps.color
-      }
-    }
-    return null
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log('componentDidUpdate', prevProps, prevState, this.state)
+    console.log('componentDidUpdate', {
+      prevProps,
+      prevState
+    })
     if (prevState.color !== this.state.color) {
       this.props.onChange(this.state.color)
     }
   }
 
   handleChangeColor = () => {
-    console.log('handleChangeColor')
     this.setState({
       color: `c_${Utils.createColor()}`,
-      ownUpdate: true
     })
+  }
+
+  handleAddCounter = () => {
+    this.setState(preState => ({
+      counter: preState.counter + 1
+    }))
   }
 
   render() {
     return <div style={{ border : 'red 1px solid'}}>
-      <button onClick={this.handleChangeColor}>changeColor</button>
-      <p>color: {this.state.color}</p>
+      <p><button onClick={this.handleAddCounter}>addCounter：{this.state.counter}</button></p>
+      <p><button onClick={this.handleChangeColor}>changeColor：{this.state.color}</button></p>
     </div>
   }
 }

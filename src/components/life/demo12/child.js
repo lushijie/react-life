@@ -12,6 +12,7 @@ export default class extends React.Component {
   }
 
   static defaultProps = {
+    counter: 0,
     color: '',
     onChange: () => {}
   }
