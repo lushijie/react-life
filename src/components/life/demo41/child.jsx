@@ -6,7 +6,7 @@ export default function(props) {
   let [color, setColor] = useState(props.color);
 
   function handleAddCounter () {
-    setCounter(counter + 1)
+    setCounter(prevState => prevState + 1)
   }
 
   function handleChangeColor() {
