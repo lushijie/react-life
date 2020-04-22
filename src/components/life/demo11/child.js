@@ -12,7 +12,6 @@ export default class extends React.Component {
   }
 
   static defaultProps = {
-    counter: 0,
     color: '',
     onChange: () => {}
   }
@@ -20,13 +19,6 @@ export default class extends React.Component {
   static propTypes = {
     color: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired
-  }
-
-  UNSAFE_componentWillUpdate(nextProps, nextState) {
-    console.log('child componentWillUpdate', {
-      nextProps,
-      nextState
-    })
   }
 
   // 子组件 setState 不会触发该声明周期
